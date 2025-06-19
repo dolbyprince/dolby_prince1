@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pro Social Hub - Premium</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600&family=Poppins:wght@300;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #89f7fe, #ffecd2);
+      --text-color: #111;
+      --container-bg: rgba(255, 255, 255, 0.9);
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: var(--bg-gradient);
+      color: var(--text-color);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+      transition: all 0.5s ease;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    .bubbles {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      z-index: -1;
+      overflow: hidden;
+    }
+
+    .bubble {
+      position: absolute;
+      bottom: -100px;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 50%;
+      animation: float 8s infinite ease-in;
+      opacity: 0.5;
+      filter: blur(1px);
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0.5; }
+      100% { transform: translateY(-1000px) rotate(720deg); opacity: 0; }
+    }
+
+    .container {
+      max-width: 480px;
+      width: 100%;
+      background: var(--container-bg);
+      border-radius: 25px;
+      padding: 40px 30px;
+      box-shadow: 0 0 20px rgba(255, 100, 100, 0.3);
+      backdrop-filter: blur(15px);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: #fff;
+      border: none;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      cursor: pointer;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      z-index: 10;
+    }
+
+    .theme-toggle i {
+      font-size: 18px;
+      color: #333;
+      transition: transform 0.3s ease;
+    }
+
+    .theme-toggle:hover i {
+      transform: rotate(90deg);
+    }
+
+    .profile-container {
+      position: relative;
+      width: 140px;
+      height: 140px;
+      margin: 0 auto 25px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .profile-img {
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 3px solid #ff7f7f;
+      object-fit: cover;
+      box-shadow: 0 0 15px rgba(255, 0, 100, 0.4);
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-ring {
+      position: absolute;
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      border: 2px dashed #ff7f7f;
+      animation: rotate 20s linear infinite;
+    }
+
+    .profile-ring:nth-child(2) {
+      width: 150px;
+      height: 150px;
+      animation-direction: reverse;
+      animation-duration: 25s;
+      border-color: #89f7fe;
+    }
+
+    h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 600;
+      font-size: 32px;
+      margin-bottom: 10px;
+      letter-spacing: 1.5px;
+      background: linear-gradient(90deg, #ff7f7f, #89f7fe);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    p {
+      font-weight: 300;
+      font-size: 16px;
+      margin-bottom: 30px;
+      position: relative;
+      display: inline-block;
+    }
+
+    p::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 50px;
+      height: 2px;
+      background: linear-gradient(90deg, #ff7f7f, #89f7fe);
+      animation: underlinePulse 3s infinite;
+    }
+
+    @keyframes underlinePulse {
+      0% { width: 50px; }
+      50% { width: 80px; }
+      100% { width: 50px; }
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      background: #fff;
+      border-radius: 50px;
+      padding: 14px 22px;
+      margin-bottom: 18px;
+      color: #333;
+      font-weight: 600;
+      font-size: 16px;
+      text-decoration: none;
+      box-shadow: 0 0 12px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .social-link:hover {
+      transform: scale(1.05);
+      background: var(--bg-color);
+      color: #fff;
+    }
+
+    .social-link::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+      transition: 0.5s;
+    }
+
+    .social-link:hover::before {
+      left: 100%;
+    }
+
+    .icon-container {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: #eee;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 18px;
+      box-shadow: 0 0 10px var(--glow-color);
+      transition: all 0.3s ease;
+    }
+
+    .social-link:hover .icon-container {
+      background: var(--glow-color);
+      box-shadow: 0 0 20px 6px var(--glow-color);
+    }
+
+    .icon-container i {
+      font-size: 20px;
+      color: var(--glow-color);
+      transition: transform 0.3s ease;
+    }
+
+    .social-link:hover .icon-container i {
+      transform: scale(1.2);
+      color: #fff;
+    }
+
+    .instagram { --glow-color: #e4405f; --bg-color: #e4405f; }
+    .facebook  { --glow-color: #1877f2; --bg-color: #1877f2; }
+    .snapchat  { --glow-color: #fffc00; --bg-color: #fffc00; }
+    .telegram  { --glow-color: #0088cc; --bg-color: #0088cc; }
+    .youtube   { --glow-color: #ff0000; --bg-color: #ff0000; }
+
+    .visitor-counter {
+      background: rgba(255,255,255,0.7);
+      padding: 8px 15px;
+      border-radius: 20px;
+      font-size: 14px;
+      margin-bottom: 20px;
+      display: inline-block;
+      animation: pulse 2s infinite;
+    }
+
+    footer {
+      margin-top: 30px;
+      font-size: 13px;
+      font-weight: 500;
+      position: relative;
+    }
+
+    footer::before {
+      content: '';
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100px;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, #888, transparent);
+    }
+
+    @keyframes rotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,100,100,0.4); }
+      70% { transform: scale(1.05); box-shadow: 0 0 0 10px rgba(255,100,100,0); }
+      100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(255,100,100,0); }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .container > * {
+      animation: fadeIn 0.6s ease forwards;
+      opacity: 0;
+    }
+
+    .container > *:nth-child(1) { animation-delay: 0.1s; }
+    .container > *:nth-child(2) { animation-delay: 0.2s; }
+    .container > *:nth-child(3) { animation-delay: 0.3s; }
+    .container > *:nth-child(4) { animation-delay: 0.4s; }
+
+    @media (max-width: 480px) {
+      .container { padding: 30px 20px; }
+      h1 { font-size: 28px; }
+    }
+
+    @media (max-width: 360px) {
+      .profile-img { width: 100px; height: 100px; }
+      .profile-container { width: 110px; height: 110px; }
+      .profile-ring { width: 110px; height: 110px; }
+      .profile-ring:nth-child(2) { width: 120px; height: 120px; }
+    }
+  </style>
+</head>
+<body>
+  <div class="bubbles" id="bubbles"></div>
+
+  <div class="container">
+    <button class="theme-toggle" onclick="toggleTheme()">
+      <i class="fas fa-lightbulb"></i>
+    </button>
+
+    <div class="profile-container">
+      <div class="profile-ring"></div>
+      <div class="profile-ring"></div>
+      <img src="https://i.ibb.co/GQ3YMqFh/DSC-1135.jpg" alt="Profile" class="profile-img" />
+    </div>
+
+    <h1>dolby_prince</h1>
+    <p>🎬 Content Creator | 📸 Influencer | 🌐 Digital Marketer</p>
+
+    <div class="visitor-counter">
+      <i class="fas fa-users"></i>
+      <span id="counter">0</span> Visitors
+    </div>
+
+    <a href="https://www.instagram.com/dolby__prince?igsh=ZGUzMzM3NWJiOQ==" target="_blank" class="social-link instagram">
+      <div class="icon-container"><i class="fab fa-instagram"></i></div>
+      Instagram
+    </a>
+
+    <a href="https://www.facebook.com/share/1BVRAy11Dq/" target="_blank" class="social-link facebook">
+      <div class="icon-container"><i class="fab fa-facebook-f"></i></div>
+      Facebook
+    </a>
+
+    <a href="https://www.snapchat.com/add/dolby_prince?share_id=hOYFvOQIaFg&locale=en-IN" target="_blank" class="social-link snapchat">
+      <div class="icon-container"><i class="fab fa-snapchat-ghost"></i></div>
+      Snapchat
+    </a>
+
+    <a href="https://youtube.com/@dolbyprinceff?si=ySc6afsiIP3I64o8" target="_blank" class="social-link youtube">
+      <div class="icon-container"><i class="fab fa-youtube"></i></div>
+      YouTube
+    </a>
+
+    <a href="https://t.me/DevilD051" target="_blank" class="social-link telegram">
+      <div class="icon-container"><i class="fab fa-telegram-plane"></i></div>
+      Telegram
+    </a>
+
+    <footer>© 2025 dolby_prince | All Rights Reserved</footer>
+  </div>
+
+  <script>
+    const themes = [
+      {
+        bg: "linear-gradient(135deg, #89f7fe, #ffecd2)",
+        text: "#111",
+        box: "rgba(255,255,255,0.9)",
+        bubbles: true
+      },
+      {
+        bg: "linear-gradient(135deg, #ff9a9e, #a1c4fd)",
+        text: "#111",
+        box: "rgba(255,255,255,0.9)",
+        bubbles: false
+      },
+      {
+        bg: "#111",
+        text: "#eee",
+        box: "rgba(30,30,30,0.95)",
+        bubbles: false
+      }
+    ];
+
+    let currentTheme = 0;
+
+    function createBubbles() {
+      const bubblesContainer = document.getElementById('bubbles');
+      bubblesContainer.innerHTML = '';
+      if (!themes[currentTheme].bubbles) return;
+
+      for (let i = 0; i < 20; i++) {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        const size = Math.random() * 40 + 10;
+        bubble.style.width = `${size}px`;
+        bubble.style.height = `${size}px`;
+        bubble.style.left = `${Math.random() * 100}%`;
+        bubble.style.animationDuration = `${Math.random() * 10 + 5}s`;
+        bubble.style.animationDelay = `${Math.random() * 5}s`;
+        bubblesContainer.appendChild(bubble);
+      }
+    }
+
+    function toggleTheme() {
+      currentTheme = (currentTheme + 1) % themes.length;
+      const root = document.documentElement;
+      root.style.setProperty('--bg-gradient', themes[currentTheme].bg);
+      root.style.setProperty('--text-color', themes[currentTheme].text);
+      root.style.setProperty('--container-bg', themes[currentTheme].box);
+
+      const themeIcon = document.querySelector('.theme-toggle i');
+      themeIcon.className = currentTheme === 2 ? 'fas fa-moon' : 'fas fa-lightbulb';
+      createBubbles();
+    }
+
+    if (!localStorage.getItem('visits')) {
+      localStorage.setItem('visits', 0);
+    }
+    let visits = parseInt(localStorage.getItem('visits')) + 1;
+    localStorage.setItem('visits', visits);
+    document.getElementById('counter').textContent = visits;
+
+    createBubbles();
+  </script>
+</body>
+</html>
